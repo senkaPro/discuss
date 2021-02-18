@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}Link{% endblock %}
+
 {% block content %}
-{% for object in  page_obj%}
 {% include 'link_delete.html' %}
+{% for object in  page_obj%}
 <div class="card my-2">
     <div class="card-header">
         <i class="far fa-star"></i> Featured
@@ -12,8 +13,10 @@
         <p class="card-text my-1"><i class="fas fa-user"></i> {{object.submitted_by.username|title}}</p>
         <p class="card-text"><small class="text-muted">{{object.submitted_on}}</small></p>
         <div class="text-end">
-            <a href="#" class="btn btn-outline-primary">Edit</a>
-            <a href="{% url 'link-delete' pk=object.pk %}" class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#deleteModal">
+            <a href="{% url 'link-edit' pk=object.pk %}"  class="btn btn-outline-primary">Edit</a>
+            <a href="" data-url="{% url 'link-delete' pk=object.pk %}" 
+                       data-message="Are you sure you want to delete {{object.title}} ?"
+                       class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#deleteModal">
                 Delete
             </a>
         </div>
@@ -24,15 +27,5 @@
 {% endfor %}
 {% include 'pagination.html' %}
 {% endblock content %}
-{% block scripts %}
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> 
-<script>
-    $(document).ready(function(){
-        $('#delete').click(function(){
-            $('#deleteModal').modal('show');
-        });
-    });
-</script>
-{% endblock scripts%} 
+
+

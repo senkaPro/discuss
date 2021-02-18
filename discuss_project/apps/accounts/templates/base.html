@@ -23,7 +23,7 @@
                 </ul>
                 <ul class="navbar-nav mr-2 my-lg-0">
                     {% if request.user.is_authenticated %}
-                    <li class="nav-item"><a href="{% url 'user-links' %}" class="nav-link"><i class="fas fa-user-circle ml-2"></i>  {{ user.username|title }}</a></li>
+                    <li class="nav-item"><a href="{% url 'user-links' user=request.user %}" class="nav-link"><i class="fas fa-user-circle ml-2"></i>  {{ user.username|title }}</a></li>
                     <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-sign-out-alt ml-2"></i> Logout </a></li>
                     {% else %}
                     <li class="nav-item"><a href="{% url 'login' %}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login </a></li>
@@ -41,7 +41,7 @@
             <div class="col-md-8">
               {% block content %}
                 {% for object in  page_obj%}
-                    <div class="card my-2">
+                    <div class="card my-2 border-info">
                         <div class="card-header">
                             <i class="far fa-star"></i> Featured
                         </div>
@@ -61,7 +61,7 @@
                     </div>
 
                 {% endfor %}
-                {% include 'pagination.html' %}
+                    {% include 'pagination.html' %}
               {% endblock content %}
             </div>
 

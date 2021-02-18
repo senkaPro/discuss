@@ -9,7 +9,6 @@ class Link(models.Model):
     upvotes = models.ManyToManyField(User, related_name='votes')
 
 
-def __str__(self):
-    return self.title
+    def __str__(self):
+        return self.title
 
-    
