@@ -1,34 +1,46 @@
 {% extends 'base.html' %}
-{% block title %}Create Link{% endblock %}
+{% block title %}Create Link{% endblock title %}
 {% block content %}
 
-<h1>Create link:</h1>
+<div class="card my-5">
+    <div class="card-body">
+        <h5 class="card-title my-3">Create Link:</h5>
+        <form action="{% url 'link-create' %}" method="POST" role="form">
+            <div class="row flex-column mx-auto">
+                <div class="col-sm-12">
+                    {% csrf_token %}
+                    {% if form.subject.errors %}
+                    <ol role="alertdialog">
+                        {% for error in form.subject.erros %}
+                        <li role="alert"><strong>{{ error|escape }}</strong></li>
+                        {% endfor %}
+                    </ol>
+                    {% endif %}
 
-<form action="{% url 'link-create' %}" method="POST" role="form">
-    {% csrf_token %}
-    {% if form.subject.errors %}
-    <ol role="alertdialog">
-        {% for error in form.subject.erros %}
-        <li role="alert"><strong>{{ error|escape }}</strong></li>
-        {% endfor %}
-    </ol>
-    {% endif %}
+                    {% for field in form %}
+                    <div class="fieldWrapper form-group"
+                        aria-required="{% if field.field.required %}'true'{% else %}'false'{% endif %}">
+                        {{ field.label_tag }}
+                        {% if field.field.required %}
+                        <span class="required text-danger">*</span>
+                        {%endif %}
+                        {{ field }}
+                        {% if field.error %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ field.error}}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-outline-primary my-3"><i
+                            class="fas fa-pen-alt"></i>&nbsp;Add link</button>
+                </div>
+            </div>
+        </form>
 
-    {% for field in form %}
-    <div class="fieldWrapper form-group"
-        aria-required="{% if field.field.required %}'true'{% else %}'false'{% endif %}">
-        {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
-        {{ field }}
-        {% if field.error %}
-        <div class="alert alert-danger" role="alert">
-            {{ field.error}}
-        </div>
-        {% endif %}
+
     </div>
-    {% endfor %}
-
-    <input type="submit" class="btn btn-primary mt-4" value="Add link" />
-
-</form>
-
+</div>
 {% endblock content %}

@@ -1,0 +1,53 @@
+{% load humanize %}
+{% include 'link_delete.html' %}
+<div class="card my-2" style="border-color: #DAC0F3;">
+                <div class="card-header text-white" style="background-color: #B577F3;">
+                    <i class="far fa-star"></i> Featured
+                </div>
+
+
+                <div class="card-body">
+                        <div class="card-text my-1 ">
+                                <div class="row flex-column">
+                                    <div class="col-md-12">
+                                        <h5 class="card-title mt-2 mb-4"><a href="{{object.url}}" target="_blank">{{object.title}}</a></h5>
+                                    </div>
+                                    <div class="d-grid gap-2 m-0">
+                                        <button class="btn btn-outline-primary" data-toggle="collapse" data-target=""
+                                            href="#collapseCommentForm{{object.pk}}" role="button" aria-expanded="false"
+                                            aria-controls="collapseCommentForm{{object.pk}}">
+                                            <i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Comment
+                                        </button>
+                                        <div class="text-end collapse" id="collapseCommentForm{{object.pk}}">
+                                            <div class="card card-body text-white" style="background-color: #DAC0F3;">
+                                                {% include 'comment_form.html' %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                          </div>
+                    </div>
+
+
+                    <div class="card-footer bg-white">
+                        <div class="row">
+                            <div class="col-sm-4 ml-sm-1">
+                                <a href="" class="ml-1"data-toggle="collapse" data-target="#collapseComments{{object.pk}}" role="button" 
+                                   aria-expanded="false"
+                                   aria-controls="collapseComments{{object.pk}}">See comments</a>
+                            </div>
+                            <div class="col-sm-4 mx-auto">
+                        
+                            </div>
+                            <div class="col-sm-4 text-end">
+                                <small class="text-muted px-sm-3">{{ object.submitted_on| naturaltime }}</small>
+                                <small class="text-muted"><i class="fas fa-user"></i> &nbsp;{{ object.submitted_by.username|title}}</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col collapse" id="collapseComments{{object.pk}}">
+                                {% include 'comments_list.html' %}
+                            </div>
+                        </div>
+                    </div>
+</div>

@@ -8,17 +8,22 @@ from django.conf import settings
 from django.urls.base import reverse
 from .forms import UserForm,UserLoginForm
 from apps.links.models import Link
+from apps.comments.forms import CommentForm
+from apps.comments.models import Comment
 
 class HomeView(TemplateView):
     template_name = 'base.html'
     
-    def get_context_data(self, **kwargs):
+    def get_context_data(self,**kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         links = Link.objects.all().order_by('-submitted_on')
         p = Paginator(links, 3)
         page_num = self.request.GET.get('page')
         page_obj = p.get_page(page_num)
         context['page_obj'] = page_obj
+        comments = Comment.objects.all().prefetch_related('commented_to').order_by('-commented_on')
+        context['comments'] = comments
+        print(comments)
         return context
 
 

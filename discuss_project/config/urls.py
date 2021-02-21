@@ -20,6 +20,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('apps.accounts.urls')),
+    path('', include('apps.accounts.urls'), name='accounts'),
     path('links/', include('apps.links.urls'),name='links'),
+    path('comments/', include('apps.comments.urls'),name='comments')
 ] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

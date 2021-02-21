@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}Edit Link{% endblock %}
 {% block content %}
-
-<h1>Edit Link:</h1>
-
+  
+<div class="card my-5">
+<div class="card-body">
+    <h5 class="card-title my-3">Edit Link:</h5>
 <form action="{% url 'link-edit' object.pk %}" method="POST" role="form">
+    <div class="row flex-column mx-auto">
+    <div class="col-sm-12">  
     {% csrf_token %}
     {% if form.subject.errors %}
     <ol role="alertdialog">
@@ -17,7 +20,7 @@
     {% for field in form %}
     <div class="fieldWrapper form-group"
         aria-required="{% if field.field.required %}'true'{% else %}'false'{% endif %}">
-        {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
+        {{ field.label_tag }}{% if field.field.required %}<span class="required text-danger">*</span>{% endif %}
         {{ field }}
         {% if field.error %}
         <div class="alert alert-danger" role="alert">
@@ -26,9 +29,14 @@
         {% endif %}
     </div>
     {% endfor %}
-
-    <input type="submit" class="btn btn-primary mt-4" value="Confirm Edit" />
-
+    </div>
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-outline-primary my-3"><i class="fas fa-pen-alt"></i>&nbsp;Edit</button>
+    </div>
+    </div>
 </form>
 
+
+</div>
+</div>
 {% endblock content %}

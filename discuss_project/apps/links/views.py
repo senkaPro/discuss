@@ -10,14 +10,16 @@ from django.views.generic import CreateView,DetailView,ListView,DeleteView
 from django.views.generic.edit import UpdateView
 from .models import Link
 from .forms import LinkForm
+from apps.comments.models import Comment
+from apps.comments.forms import CommentForm
 
 class LinkCreateView(CreateView):
     template_name = 'link_create.html'
     form_class = LinkForm
     
     @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(LinkCreateView, self).dispatch(request=request, *args, **kwargs)
+    def dispatch(self,*args, **kwargs):
+        return super(LinkCreateView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
         link = form.save(commit=False)
@@ -27,7 +29,7 @@ class LinkCreateView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse('link-detail', kwargs={'pk':self.object.pk})
+        return reverse_lazy('link-detail', kwargs={'pk':self.object.pk})
 
 
 class LinkEdit(UpdateView):
@@ -51,10 +53,17 @@ class LinkDetail(DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        obj = get_object_or_404(Link, pk=kwargs.get('pk'))
-        if obj.submitted_by != self.request.user:
-            return HttpResponseRedirect(reverse('home'))
         return super(LinkDetail, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(LinkDetail, self).get_context_data(**kwargs)
+        comments = Comment.objects.filter(commented_to=self.object)
+        comments = sorted(comments, key= lambda x: x.commented_on, reverse=True)
+        context['comment_form'] = CommentForm(initial={'link_pk': self.object.pk})
+        context['object'] = self.object
+        context['comments'] = comments
+        return context
+
 
 class LinkList(ListView):
     template_name = 'link_list.html'
@@ -64,8 +73,6 @@ class LinkList(ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        print()
-
         if str(self.request.user) != str(kwargs.get('user')):
             return HttpResponseRedirect(reverse('home'))
         return super(LinkList, self).dispatch(request, *args, **kwargs)
@@ -73,6 +80,8 @@ class LinkList(ListView):
     def get_queryset(self, **kwargs):
         super(LinkList, self).get_queryset(**kwargs)
         return Link.objects.filter(submitted_by=self.request.user)
+
+    
 
 class LinkDelete(DeleteView):
     template_name = 'link_delete.html'

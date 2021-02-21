@@ -1,0 +1,46 @@
+{% load humanize %}
+
+{% for comment in comments %}
+
+{% if comment.commented_to.pk == object.pk %}
+
+    <div class="row flex-column">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header align-middle bg-white-50 py-0 m-0" style="height: 2em; font-size:small;">
+                    <span class="align-middle"><i class="fas fa-user"></i> &nbsp;{{comment.commented_by}}&nbsp;&nbsp;<i class="far fa-clock"></i>&nbsp;{{comment.commented_on|naturaltime}}</span>
+                </div>
+                <div class="card-body">
+                    <p>{{comment.body}}</p>
+                </div>
+                <div class="card-footer bg-white">
+                    <small></small>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-11 offset-1 my-1">
+            <div class="card">
+                <div class="card-header align-middle bg-white-50 py-0 m-0" style="height: 2em; font-size:small;">
+                    <span class="align-middle"><i class="fas fa-user"></i> &nbsp;{{comment.commented_by}}&nbsp;&nbsp;<i class="far fa-clock"></i>&nbsp;{{comment.commented_on|naturaltime}}</span>
+                </div>
+                <div class="card-body">
+                    <p>{{comment.body}}</p>
+                </div>
+                <div class="card-footer bg-white">
+                    <small></small>
+                </div>
+            </div>
+            Reply Comments here
+        </div>
+    </div>
+    {% endif %}
+{% endfor %}
+{% if not comment.commented_by%}
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <span class="text-center text-muted">No comments to show</span>
+    </div>
+</div>
+{% endif %}
+
+        

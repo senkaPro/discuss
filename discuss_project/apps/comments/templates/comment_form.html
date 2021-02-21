@@ -1,0 +1,27 @@
+<form  method="post" id="commentForm{{object.pk}}" action="{% url "new-comment" %}?link_pk={{object.pk}}">
+    {% csrf_token %}
+    {% if form.subject.errors %}
+                    <ol role="alertdialog">
+                        {% for error in form.subject.erros %}
+                        <li role="alert"><strong>{{ error|escape }}</strong></li>
+                        {% endfor %}
+                    </ol>
+     {% endif %}
+
+<div class="form-group">
+    {% for field in form %}
+    {% if field.error %}
+    <div class="alert alert-danger" role="alert">
+        {{ field.error}}
+    </div>
+    {% endif %}
+    {% endfor %}
+    <input type="hidden" name="link_pk" value="{{object.pk}}">
+    <div class="text-start">
+        <label for="exampleFormControlTextarea1">Commenting on </label>
+    </div>
+    <textarea class="form-control" placeholder="Write your comment here.." name="body" id="exampleFormControlTextarea1" rows="3" style="border-color: #B577F3;"></textarea>
+</div>
+    <input id="confirmComment" class="mt-2 btn" type="submit" value="Add Comment">
+</form>
+ 
