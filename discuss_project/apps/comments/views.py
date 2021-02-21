@@ -16,8 +16,7 @@ class CommentCreateView(CreateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         if self.form_class.is_valid:
-            pk = self.request.GET.get('link_pk')
-            return HttpResponseRedirect(reverse('link-detail',kwargs={'pk':pk}))
+            return HttpResponseRedirect(reverse_lazy('link-detail', kwargs={'pk':self.request.GET.get('link_pk')}))
         return super(CommentCreateView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):

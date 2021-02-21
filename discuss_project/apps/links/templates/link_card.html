@@ -1,8 +1,17 @@
 {% load humanize %}
 {% include 'link_delete.html' %}
 <div class="card my-2" style="border-color: #DAC0F3;">
-                <div class="card-header text-white" style="background-color: #B577F3;">
-                    <i class="far fa-star"></i> Featured
+                <div class="card-header container text-white" style="background-color: #B577F3;">
+                    <div class="row justify-content-between">
+                        <div class="col-sm-2">
+                            <i class="far fa-star"></i> Featured
+                        </div>
+                        <div class="col-sm-2 text-end">
+                            {% if object.submitted_by == request.user %}
+                            <a class="text-white" href="{% url 'link-detail' pk=object.pk %}"><i class="fas fa-pen-alt"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
 
 
