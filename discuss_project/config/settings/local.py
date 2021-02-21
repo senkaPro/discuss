@@ -47,14 +47,11 @@ TEMPLATES = [
 
 STATIC_URL = '/static/'
 STATIC_ROOT = Path(BASE_DIR / 'static')
-<<<<<<< HEAD
 
-=======
->>>>>>> 5195fb03ff926e54c15f3ecf2663bae7843745ff
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
-
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
