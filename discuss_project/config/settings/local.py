@@ -47,10 +47,6 @@ TEMPLATES = [
 
 STATIC_URL = '/static/'
 STATIC_ROOT = Path(BASE_DIR / 'static')
-<<<<<<< HEAD
-=======
-
->>>>>>> 842e7e71208042a405dd03952d63373a7f483fac
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
