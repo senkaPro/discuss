@@ -5,6 +5,7 @@ __pycache__/
 migrations
 .vscode
 static
+settings
 .urls*
 *.swp
 # C extensions
